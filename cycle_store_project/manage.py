@@ -64,3 +64,25 @@ def read_customers():
     customers = Customer.objects.all()
     for customer in customers:
         print(customer)
+
+def update_customer(customer_id, name):
+    try: 
+        customer = customer.objects.get(id=customer_id)
+        customer.name = name
+        customer.save()
+        print(f"Updated Customer: {customer}")
+    except Customer.DoesNotExist:
+        print(f"Customer Not Found")
+
+def delete_customer(customer_id, name):
+    try: 
+        customer = customer.objects.get(id=customer_id)
+        customer.name = name
+        customer.delete()
+        print(f"Customer Deleted: {customer}")
+    except Customer.DoesNotExist:
+        print(f"Customer Not Found")
+
+    ## Customer Order CRUD 
+
+def create_order(customer_id, name):
