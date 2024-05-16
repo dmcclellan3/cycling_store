@@ -36,8 +36,7 @@ customers = Customer.objects.all()
 for customer in customers:
     print(customer.customer_name)
 
-# new_vehicle_type = Vehicle(vehicle_type_bicycle = Schwin)
-# new_vehicle_type.save()
+
 
 #Update
 
