@@ -85,4 +85,27 @@ def delete_customer(customer_id, name):
 
     ## Customer Order CRUD 
 
-def create_order(customer_id, name):
+def create_order(customer_id, vehicle_id, paid=False):
+    try: 
+        customer = customer.object.get(id=customer_id)
+        order = CustomerOrder(customer=customer, paid=paid)
+        order.save()
+        for vehicle_id in vehicle_ids:
+            vehicle = vehicle.objects.get(id=vehicle_id)
+            order.order.add(vehicle)
+        order.save()
+        print(f"Order Created {order}")
+    except Customer.DoesNotExist:
+        print("Customer Not Found")
+    except vehicle.DoesNotExist:
+        print("Vehicle Not Found")
+
+def read_orders():
+    orders = CustomerOrder.objects.all()
+    for order in orders:
+        print(order)
+
+
+
+
+
