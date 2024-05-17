@@ -70,7 +70,8 @@ def delete_vehicle(vehicle_id):
 
         ## Customer CRUD
 
-def create_customer(name):
+def create_customer():
+    name = input("Enter Name")
     customer = Customer(customer_name=name)
     customer.save()
     print(f"Created customer: {customer}")
@@ -106,16 +107,18 @@ def delete_customer(customer_id, name):
     ## Customer Order CRUD 
 
 # delete_customer(2, 'Jane Doe')
-read_customers()
+# read_customers()
 
-def create_order(customer_id, vehicle_ids, paid=False):
+def create_order(customer):
     try: 
-        customer = Customer.objects.get(id=customer_id)
-        order = CustomerOrder(customer=customer, paid=paid)
+        # customer = Customer.objects.get(id=customer_id)
+        order = CustomerOrder(customer=customer)
         order.save()
-        for vehicle_id in vehicle_ids:
-            vehicle = Vehicle.objects.get(id=vehicle_id)
-            order.order.add(vehicle)
+        for vehicle in Vehicle.objects.all():
+            print(f'{vehicle.id} - {vehicle}')
+        sel_id = input('Enter ID of Vehicle ')
+        sel_vehicle = Vehicle.objects.get(id=sel_id)
+        order.order.add(sel_vehicle)
         order.save()
         print(f"Order Created {order}")
     except Customer.DoesNotExist:
@@ -123,11 +126,15 @@ def create_order(customer_id, vehicle_ids, paid=False):
     except Vehicle.DoesNotExist:
         print("Vehicle Not Found")
 
+# customer = Customer.objects.get(id=7)
+# create_order(customer)
 
 def read_orders():
     orders = CustomerOrder.objects.all()
     for order in orders:
         print(order)
+
+# read_orders()
 
 
 def update_order(order_id, customer_id=None, vehicle_ids=None, paid=None):
@@ -163,8 +170,9 @@ def delete_order(order_id):
 
 ##Vehicle CRUD
 
-def create_vehicle(vehicle_type):
+def create_vehicle():
     try:
+        vehicle_type = input("Enter Type ")
         vehicle = Vehicle(type=vehicle_type, number_in_stock=1)
         vehicle.save()
         print(f"Created Vehicle: {vehicle}")
@@ -173,7 +181,7 @@ def create_vehicle(vehicle_type):
 
 # create_vehicle('bicycle')
 
-def read_vehicle(type):
+def read_vehicle():
     vehicle = Vehicle.objects.all()
     for vehicle in vehicle:
         print(vehicle)
@@ -198,9 +206,39 @@ def delete_vehicle(type):
     except Vehicle.DoesNotExist:
         print(f"Vehicle Not Found")
  
-delete_vehicle('bicycle')
-read_vehicle(type)
+def run_program():
+    ## List of vehicles
+    print(f'\
+          \n \
+          The Duke of Cycles \n \
+          \n \
+          ***************** \n \
+          1 - List Vehicles \n \
+          2 - List Customers \n \
+          3 - List Orders \n \
+          4 - New Customer \n \
+          5 - Create Vehicle \n \
+          Q - Quit \n \
+          ')
+    choice = input("Select Option and Hit <ENTER> ")
+    if choice == 'Q' or choice == 'q':
+        quit()
+    elif choice == '1':
+        read_vehicle()
+    elif choice == '2':
+        read_customers()
+    elif choice == '3':
+        read_orders()
+    elif choice == '4':
+        create_customer()
+    elif choice == '5':
+        create_vehicle()
+    ## List of customers
+    ## List of orders
+    ## add customer
+    ## add order
 
+run_program()
 
 
 
