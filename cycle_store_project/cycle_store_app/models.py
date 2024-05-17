@@ -22,8 +22,7 @@ class Customer(models.Model):
 class CustomerOrder(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='customer_order', null=True)
     order = models.ManyToManyField(Vehicle)
-    created_date = models.DateTimeField(auto_now_add=True)
-    paid = models.BooleanField(default=False)
+   
 
     def __str__(self):
         return f"Order #{self.id} by {self.customer.customer_name}"
